@@ -201,7 +201,7 @@
             if (this.options.filter) {
                 this.$drop.append([
                     '<div class="ms-search">',
-                    '<input type="text" autocomplete="off" autocorrect="off" autocapitilize="off" spellcheck="false">',
+                    '<input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">',
                     '</div>'].join('')
                 );
             }
