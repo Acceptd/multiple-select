@@ -636,6 +636,12 @@
         refresh: function () {
             this.init();
         },
+		
+		destroy: function () {
+            this.$el.show();
+            this.$parent.remove();
+            this.$el.data('multipleSelect', null);
+		},
 
         filter: function () {
             var that = this,
@@ -686,7 +692,7 @@
                 'open', 'close',
                 'checkAll', 'uncheckAll',
                 'focus', 'blur',
-                'refresh', 'close'
+                'refresh', 'destroy'
             ];
 
         this.each(function () {
