@@ -211,6 +211,7 @@
                     '<li class="ms-select-all">',
                     '<label>',
                     sprintf('<input type="checkbox" %s /> ', this.selectAllName),
+                    '<span class="control-indicator"></span>',
                     this.options.selectAllDelimiter[0],
                     this.options.selectAllText,
                     this.options.selectAllDelimiter[1],
@@ -274,6 +275,7 @@
                         selected ? ' checked="checked"' : '',
                         disabled ? ' disabled="disabled"' : '',
                         sprintf(' data-group="%s"', group)),
+                    '<span class="control-indicator"></span>',
                     sprintf('<span>%s</span>', text),
                     '</label>',
                     '</li>'
@@ -294,6 +296,7 @@
                     this.options.hideOptgroupCheckboxes || this.options.single ? '' :
                         sprintf('<input type="checkbox" %s %s>',
                         this.selectGroupName, disabled ? 'disabled="disabled"' : ''),
+                        '<span class="control-indicator"></span>',
                     label,
                     '</label>',
                     '</li>'
