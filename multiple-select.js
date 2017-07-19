@@ -201,7 +201,7 @@
             if (this.options.filter) {
                 this.$drop.append([
                     '<div class="ms-search">',
-                    '<input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">',
+                    sprintf('<input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="%s">', this.options.filterPlaceholder),
                     '</div>'].join('')
                 );
             }
@@ -765,6 +765,7 @@
         allSelected: 'All selected',
         countSelected: '# of % selected',
         noMatchesFound: 'No matches found',
+        filterPlaceholder: 'Search',
 
         styler: function () {
             return false;
