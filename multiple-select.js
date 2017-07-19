@@ -342,6 +342,11 @@
                 }
             });
 
+            this.$parent.focusout(function (e) {
+                if (!that.options.isOpen || that.options.keepOpen || $(e.relatedTarget).is('input')) return;
+                that.close();
+            });
+
             this.$searchInput.off('keydown').on('keydown',function (e) {
                 // Ensure shift-tab causes lost focus from filter as with clicking away
                 if (e.keyCode === 9 && e.shiftKey) {
