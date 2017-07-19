@@ -219,9 +219,12 @@
                 ].join(''));
             }
 
+            var elems = [];
             $.each(this.$el.children(), function (i, elm) {
-                $ul.append(that.optionToHtml(i, elm));
+                elems.push(that.optionToHtml(i, elm));
             });
+            $ul.append(elems);
+
             $ul.append(sprintf('<li class="ms-no-results">%s</li>', this.options.noMatchesFound));
             this.$drop.append($ul);
 
@@ -242,12 +245,6 @@
 
             if (this.options.isOpen) {
                 this.open();
-            }
-
-            if (this.options.openOnHover) {
-                $(".ms-parent").hover(function (e) {
-                    that.open();
-                });
             }
         },
 
@@ -613,12 +610,6 @@
             this.$choice.addClass('disabled');
         },
 
-        destroy: function () {
-            this.$el.show();
-            this.$parent.remove();
-            delete $.fn.multipleSelect;
-        },
-
         checkAll: function () {
             this.$selectItems.prop('checked', true);
             this.$selectGroups.prop('checked', true);
@@ -649,11 +640,11 @@
             this.init();
         },
 
-		destroy: function () {
+        destroy: function () {
             this.$el.show();
             this.$parent.remove();
             this.$el.data('multipleSelect', null);
-		},
+        },
 
         filter: function () {
             var that = this,
@@ -769,7 +760,6 @@
         addTitle: false,
         filterAcceptOnEnter: false,
         hideOptgroupCheckboxes: false,
-        openOnHover: false,
 
         selectAllText: 'Select all',
         allSelected: 'All selected',
