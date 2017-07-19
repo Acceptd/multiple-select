@@ -27,7 +27,7 @@ $(function() {
         $('#e9').find('select').multipleSelect({
             selectAll: false
         });
-        
+
         $('#e10, #e11, #e12, #e13, #e19').find('select').multipleSelect();
         $('#setSelectsBtn').click(function() {
             $('#e10').find('select').multipleSelect('setSelects', [1, 3]);
@@ -135,4 +135,4 @@ $(function() {
             keepOpen: true
         });
     });
-}); 
+});

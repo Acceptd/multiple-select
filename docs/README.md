@@ -891,7 +891,7 @@ Custom the item style.
 
 ### The Refresh
 
-Reloads the Multiple Select. 
+Reloads the Multiple Select.
 If you're dynamically adding/removing option tags on the original select via AJAX or DOM manipulation methods, call refresh to reflect the changes.
 
 <p>
@@ -949,6 +949,48 @@ If you're dynamically adding/removing option tags on the original select via AJA
 			}
 			$input.val("");
 			$select.append($opt).multipleSelect("refresh");
+        });
+    </script>
+</body>
+```
+
+### The Destroy
+
+Destroy the Multiple Select.
+
+If you want remove the multiple select properly.
+
+``` javascript
+$('select').multipleSelect('destroy');
+```
+
+<p>
+	<button id="destroy" class="button">Destroy</button>
+</p>
+<p id="e13">
+	<select class="w300" multiple="multiple">
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+	</select>
+</p>
+
+``` html
+<head>
+	<link href="multiple-select.css" rel="stylesheet"/>
+</head>
+<body>
+    <select multiple="multiple">
+        <option value="1">1</option>
+        ...
+        <option value="3">3</option>
+    </select>
+	<button id="destroy" class="button">Destroy</button>
+    <script src="multiple-select.js"></script>
+    <script>
+        $("select").multipleSelect();
+        $("#destroy").click(function() {
+			$("select").multipleSelect("destroy");
         });
     </script>
 </body>
@@ -1034,11 +1076,11 @@ If you're dynamically adding/removing option tags on the original select via AJA
 				var values = $.map(view.children, function(child){
 					return child.value;
 				}).join(', ');
-				$eventResult.text('Optgroup ' + view.label + ' ' + 
+				$eventResult.text('Optgroup ' + view.label + ' ' +
 					(view.checked ? 'checked' : 'unchecked') + ': ' + values);
 			},
 			onClick: function(view) {
-				$eventResult.text(view.label + '(' + view.value + ') ' + 
+				$eventResult.text(view.label + '(' + view.value + ') ' +
 					(view.checked ? 'checked' : 'unchecked'));
 			}
         });
@@ -1052,7 +1094,7 @@ If you're dynamically adding/removing option tags on the original select via AJA
 
 #### isOpen
 
-Type: boolean	
+Type: boolean
 
 Whether or not Multiple Select open the select dropdown.
 
@@ -1060,7 +1102,7 @@ By default this option is set to ```false```.
 
 #### placeholder
 
-Type: string	
+Type: string
 
 A placeholder value can be defined and will be displayed until you select a item.
 
@@ -1068,7 +1110,7 @@ By default this option is set to ```''```.
 
 #### selectAll
 
-Type: boolean	
+Type: boolean
 
 Whether or not Multiple Select show select all checkbox.
 
@@ -1076,7 +1118,7 @@ By default this option is set to ```true```.
 
 #### selectAllText
 
-Type: string	
+Type: string
 
 Multiple Select select all checkbox text.
 
@@ -1084,7 +1126,7 @@ By default this option is set to ```Select all```.
 
 #### selectAllDelimiter
 
-Type: Array	
+Type: Array
 
 Multiple Select select all checkbox delimiter.
 
@@ -1124,7 +1166,7 @@ By default this option is set to ```false```.
 
 #### multiple
 
-Type: boolean	
+Type: boolean
 
 Whether or not Multiple Select show multiple items in a row.
 
@@ -1132,7 +1174,7 @@ By default this option is set to ```false```.
 
 #### multipleWidth
 
-Type: integer	
+Type: integer
 
 Multiple Select show multiple items width.
 
@@ -1227,7 +1269,7 @@ Bind an event handler to the "blur"
 
 #### onOptgroupClick
 
-Fires when a an optgroup label is clicked on. 
+Fires when a an optgroup label is clicked on.
 
 ```javascript
 onOptgroupClick: function(view) {
@@ -1241,7 +1283,7 @@ onOptgroupClick: function(view) {
 
 #### onClick
 
-Fires when a checkbox is checked or unchecked. 
+Fires when a checkbox is checked or unchecked.
 
 ```javascript
 onClick: function(view) {
@@ -1261,7 +1303,7 @@ Gets the selected values.
 Parameter: type
 
 Type: string
-	
+
 The type of selected items. value or text
 
 The default is ```value```.
@@ -1278,7 +1320,7 @@ Sets the selected values.
 Parameter: values
 
 Type: array
-	
+
 The values of selected items.
 
 ``` javascript
@@ -1335,12 +1377,22 @@ $('select').multipleSelect('blur');
 
 #### refresh
 
-Reloads the Multiple Select. 
+Reloads the Multiple Select.
 
 If you're dynamically adding/removing option tags on the original select via AJAX or DOM manipulation methods, call refresh to reflect the changes.
 
 ``` javascript
 $('select').multipleSelect('refresh');
+```
+
+#### destroy
+
+Destroy the Multiple Select.
+
+If you want remove the multiple select properly.
+
+``` javascript
+$('select').multipleSelect('destroy');
 ```
 
 ## About

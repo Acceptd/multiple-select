@@ -201,7 +201,7 @@
             if (this.options.filter) {
                 this.$drop.append([
                     '<div class="ms-search">',
-                    '<input type="text" autocomplete="off" autocorrect="off" autocapitilize="off" spellcheck="false">',
+                    '<input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">',
                     '</div>'].join('')
                 );
             }
@@ -219,9 +219,12 @@
                 ].join(''));
             }
 
+            var elems = [];
             $.each(this.$el.children(), function (i, elm) {
-                $ul.append(that.optionToHtml(i, elm));
+                elems.push(that.optionToHtml(i, elm));
             });
+            $ul.append(elems);
+
             $ul.append(sprintf('<li class="ms-no-results">%s</li>', this.options.noMatchesFound));
             this.$drop.append($ul);
 
@@ -238,6 +241,7 @@
             this.events();
             this.updateSelectAll(true);
             this.update(true);
+            this.updateOptGroupSelect(true);
 
             if (this.options.isOpen) {
                 this.open();
@@ -506,7 +510,7 @@
             });
 
             // trigger <select> change event
-            if (!isInit) {
+            if (!isInit && isInit !== undefined) {
                 this.$el.trigger('change');
             }
         },
@@ -524,8 +528,12 @@
             }
         },
 
-        updateOptGroupSelect: function () {
-            var $items = this.$selectItems.filter(':visible');
+        updateOptGroupSelect: function (isInit) {
+            var $items = this.$selectItems;
+
+            if (!isInit) {
+                $items = $items.filter(':visible');
+            }
             $.each(this.$selectGroups, function (i, val) {
                 var group = $(val).parent().attr('data-group'),
                     $children = $items.filter(sprintf('[data-group="%s"]', group));
@@ -632,6 +640,12 @@
             this.init();
         },
 
+        destroy: function () {
+            this.$el.show();
+            this.$parent.remove();
+            this.$el.data('multipleSelect', null);
+        },
+
         filter: function () {
             var that = this,
                 text = $.trim(this.$searchInput.val()).toLowerCase();
@@ -645,8 +659,19 @@
             } else {
                 this.$selectItems.each(function () {
                     var $parent = $(this).parent();
-                    $parent[removeDiacritics($parent.text().toLowerCase()).indexOf(removeDiacritics(text)) < 0 ? 'hide' : 'show']();
+
+                    if (removeDiacritics($parent.text().toLowerCase()).indexOf(removeDiacritics(text)) < 0 ) {
+                        $parent.addClass('option-hidden');
+                        $parent.removeClass('option-visible');
+                    } else {
+                        $parent.removeClass('option-hidden');
+                        $parent.addClass('option-visible');
+                    }
                 });
+
+                $('.option-hidden', this.$ul).hide();
+                $('.option-visible', this.$ul).show();
+
                 this.$disableItems.parent().hide();
                 this.$selectGroups.each(function () {
                     var $parent = $(this).parent();
@@ -681,7 +706,7 @@
                 'open', 'close',
                 'checkAll', 'uncheckAll',
                 'focus', 'blur',
-                'refresh', 'close'
+                'refresh', 'destroy'
             ];
 
         this.each(function () {
