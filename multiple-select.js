@@ -243,6 +243,12 @@
             if (this.options.isOpen) {
                 this.open();
             }
+
+            if (this.options.openOnHover) {
+                $(".ms-parent").hover(function (e) {
+                    that.open();
+                });
+            }
         },
 
         optionToHtml: function (i, elm, group, groupDisabled) {
@@ -527,7 +533,7 @@
 
         updateOptGroupSelect: function (isInit) {
             var $items = this.$selectItems;
-            
+
             if (!isInit) {
                 $items = $items.filter(':visible');
             }
@@ -607,6 +613,12 @@
             this.$choice.addClass('disabled');
         },
 
+        destroy: function () {
+            this.$el.show();
+            this.$parent.remove();
+            delete $.fn.multipleSelect;
+        },
+
         checkAll: function () {
             this.$selectItems.prop('checked', true);
             this.$selectGroups.prop('checked', true);
@@ -636,7 +648,7 @@
         refresh: function () {
             this.init();
         },
-		
+
 		destroy: function () {
             this.$el.show();
             this.$parent.remove();
@@ -656,8 +668,19 @@
             } else {
                 this.$selectItems.each(function () {
                     var $parent = $(this).parent();
-                    $parent[removeDiacritics($parent.text().toLowerCase()).indexOf(removeDiacritics(text)) < 0 ? 'hide' : 'show']();
+
+                    if (removeDiacritics($parent.text().toLowerCase()).indexOf(removeDiacritics(text)) < 0 ) {
+                        $parent.addClass('option-hidden');
+                        $parent.removeClass('option-visible');
+                    } else {
+                        $parent.removeClass('option-hidden');
+                        $parent.addClass('option-visible');
+                    }
                 });
+
+                $('.option-hidden', this.$ul).hide();
+                $('.option-visible', this.$ul).show();
+
                 this.$disableItems.parent().hide();
                 this.$selectGroups.each(function () {
                     var $parent = $(this).parent();
@@ -746,6 +769,7 @@
         addTitle: false,
         filterAcceptOnEnter: false,
         hideOptgroupCheckboxes: false,
+        openOnHover: false,
 
         selectAllText: 'Select all',
         allSelected: 'All selected',
