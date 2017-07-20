@@ -235,6 +235,7 @@
             this.$searchInput = this.$drop.find('.ms-search input');
             this.$selectAll = this.$drop.find('input[' + this.selectAllName + ']');
             this.$selectGroups = this.$drop.find('input[' + this.selectGroupName + ']');
+            this.$allCheckboxes = this.$drop.find('input[type="checkbox"]');
             this.$selectItems = this.$drop.find('input[' + this.selectItemName + ']:enabled');
             this.$disableItems = this.$drop.find('input[' + this.selectItemName + ']:disabled');
             this.$noResults = this.$drop.find('.ms-no-results');
@@ -342,9 +343,13 @@
                 }
             });
 
-            this.$parent.focusout(function (e) {
-                if (!that.options.isOpen || that.options.keepOpen || $(e.relatedTarget).is('input')) return;
-                that.close();
+            var $firstCheckbox = this.$allCheckboxes.first();
+            var $lastCheckbox = that.$allCheckboxes.last();
+            $firstCheckbox.add($lastCheckbox).on('keyup', function (e) {
+                if (e.keyCode !== 9) return;
+                if (!that.options.filter && $(this).is($firstCheckbox) && e.shiftKey || $(this).is($lastCheckbox) && !e.shiftKey) {
+                    that.close();
+                }
             });
 
             this.$searchInput.off('keydown').on('keydown',function (e) {
@@ -428,11 +433,9 @@
             this.$choice.find('>div').addClass('open');
             this.$drop[this.animateMethod('show')]();
 
-            // fix filter bug: no results show
             this.$selectAll.parent().show();
             this.$noResults.hide();
 
-            // Fix #77: 'All selected' when no options
             if (!this.$el.children().length) {
                 this.$selectAll.parent().hide();
                 this.$noResults.show();
