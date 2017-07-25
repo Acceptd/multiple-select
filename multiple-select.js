@@ -503,7 +503,7 @@
                 $span.removeClass('placeholder').html(this.options.allSelected);
             } else if (this.options.ellipsis && sl > this.options.minimumCountSelected) {
                 $span.removeClass('placeholder').text(selects.slice(0, this.options.minimumCountSelected)
-                    .join(this.options.delimiter) + '...');
+                    .join(this.options.delimiter) + '…');
             } else if (this.options.countSelected && sl > this.options.minimumCountSelected) {
                 $span.removeClass('placeholder').html(this.options.countSelected
                     .replace('#', selects.length)
