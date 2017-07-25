@@ -210,7 +210,7 @@
                 $ul.append([
                     '<li class="ms-select-all">',
                     '<label>',
-                    sprintf('<input type="checkbox" %s /> ', this.selectAllName),
+                    sprintf('<input type="checkbox" %s />', this.selectAllName),
                     '<span class="ms-control-indicator"></span>',
                     this.options.selectAllDelimiter[0],
                     this.options.selectAllText,
