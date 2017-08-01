@@ -59,7 +59,7 @@
     background: url('multiple-select.png') left top no-repeat;
 }
 
-.ms-choice > div.open {
+.open .ms-choice > div {
     background: url('multiple-select.png') right top no-repeat;
 }
 
