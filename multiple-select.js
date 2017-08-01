@@ -797,7 +797,6 @@
         labelTemplate: function ($elm) {
             return $elm.attr('label');
         },
-
         onOpen: function () {
             return false;
         },
