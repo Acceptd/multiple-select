@@ -262,6 +262,7 @@
             if ($elm.is('option')) {
                 var value = $elm.val(),
                     text = that.options.textTemplate($elm),
+                    hidden = $elm.prop('hidden'),
                     selected = $elm.prop('selected'),
                     style = sprintf('style="%s"', this.options.styler(value)),
                     $el;
@@ -271,8 +272,9 @@
                 $el = $([
                     sprintf('<li class="%s %s" %s %s>', multiple, classes, title, style),
                     sprintf('<label class="%s">', disabled ? 'disabled' : ''),
-                    sprintf('<input type="%s" %s%s%s%s>',
+                    sprintf('<input type="%s" %s%s%s%s%s>',
                         type, this.selectItemName,
+                        hidden ? ' hidden="hidden"' : '',
                         selected ? ' checked="checked"' : '',
                         disabled ? ' disabled="disabled"' : '',
                         sprintf(' data-group="%s"', group)),
@@ -520,9 +522,12 @@
             this.$el.val(this.getSelects()).trigger('change');
 
             // add selected class to selected li
-            this.$drop.find('li').removeClass('selected');
+            this.$drop.find('li').removeClass('selected').attr('hidden', false);
             this.$drop.find('input:checked').each(function () {
                 $(this).parents('li').first().addClass('selected');
+            });
+            this.$drop.find('input[hidden]').each(function () {
+                $(this).parents('li').first().attr('hidden', true);
             });
 
             // trigger <select> change event
