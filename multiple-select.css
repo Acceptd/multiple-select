@@ -182,7 +182,8 @@
     font-weight: bold;
 }
 
-.ms-drop input[type="checkbox"] {
+.ms-drop input[type="checkbox"],
+.ms-drop input[type="radio"] {
     vertical-align: middle;
 }
 
