@@ -673,7 +673,7 @@
 
             if (text.length === 0) {
                 this.$selectAll.parent().show();
-                this.$selectItems.parent().show();
+                this.$selectItems.parent().show().removeClass('option-hidden, option-visible');
                 this.$disableItems.parent().show();
                 this.$selectGroups.parent().show();
                 this.$noResults.hide();
