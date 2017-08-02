@@ -235,7 +235,7 @@
             this.$searchInput = this.$drop.find('.ms-search input');
             this.$selectAll = this.$drop.find('input[' + this.selectAllName + ']');
             this.$selectGroups = this.$drop.find('input[' + this.selectGroupName + ']');
-            this.$allCheckboxes = this.$drop.find('input[type="checkbox"]');
+            this.$allControlItems = this.$drop.find('input[type="checkbox"], input[type="radio"]');
             this.$selectItems = this.$drop.find('input[' + this.selectItemName + ']:enabled');
             this.$disableItems = this.$drop.find('input[' + this.selectItemName + ']:disabled');
             this.$noResults = this.$drop.find('.ms-no-results');
@@ -345,8 +345,8 @@
                 }
             });
 
-            var $firstCheckbox = this.$allCheckboxes.first();
-            var $lastCheckbox = that.$allCheckboxes.last();
+            var $firstCheckbox = this.$allControlItems.first();
+            var $lastCheckbox = this.$allControlItems.last();
             $firstCheckbox.add($lastCheckbox).on('keyup', function (e) {
                 if (e.keyCode !== 9) return;
                 if (!that.options.filter && $(this).is($firstCheckbox) && e.shiftKey || $(this).is($lastCheckbox) && !e.shiftKey) {
@@ -422,7 +422,7 @@
 
                 if (that.options.single) {
                     var clickedVal = $(this).val();
-                    that.$selectItems.filter(function() {
+                    that.$allControlItems.filter(function() {
                         return $(this).val() !== clickedVal;
                     }).each(function() {
                         $(this).prop('checked', false);
