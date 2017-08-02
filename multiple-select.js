@@ -127,6 +127,8 @@
         var that = this,
             name = $el.attr('name') || options.name || '';
 
+        options.single = $el.prop('multiple') ? false : true;
+
         this.options = options;
 
         // hide select element
