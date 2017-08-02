@@ -295,10 +295,11 @@
 
                 $group.append([
                     '<li class="group">',
-                    sprintf('<label class="optgroup %s" data-group="%s">', disabled ? 'disabled' : '', group),
+                    sprintf('<label class="optgroup %s %s" data-group="%s">', disabled ? 'disabled' : '', this.options.hideOptgroupCheckboxes || this.options.single ? 'hide-control' : '', group),
                     this.options.hideOptgroupCheckboxes || this.options.single ? '' :
                         sprintf('<input type="checkbox" %s %s>',
                         this.selectGroupName, disabled ? 'disabled="disabled"' : ''),
+                    this.options.hideOptgroupCheckboxes || this.options.single ? '' :
                         '<span class="ms-control-indicator"></span>',
                     label,
                     '</label>',
