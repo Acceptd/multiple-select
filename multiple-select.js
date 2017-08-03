@@ -412,16 +412,6 @@
                 that.updateSelectAll();
                 that.update();
                 that.updateOptGroupSelect();
-                that.options.onClick({
-                    label: $(this).parent().text(),
-                    value: $(this).val(),
-                    checked: $(this).prop('checked'),
-                    instance: that
-                });
-
-                if (that.options.single && that.options.isOpen && !that.options.keepOpen) {
-                    that.close();
-                }
 
                 if (that.options.single) {
                     var clickedVal = $(this).val();
@@ -431,6 +421,17 @@
                         $(this).prop('checked', false);
                     });
                     that.update();
+                }
+
+                that.options.onClick({
+                    label: $(this).parent().text(),
+                    value: $(this).val(),
+                    checked: $(this).prop('checked'),
+                    instance: that
+                });
+
+                if (that.options.single && that.options.isOpen && !that.options.keepOpen) {
+                    that.close();
                 }
             });
         },
