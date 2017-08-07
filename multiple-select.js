@@ -169,8 +169,7 @@
         }
         this.$parent.css('width',
             this.options.width ||
-            this.$el.css('width') ||
-            this.$el.outerWidth() + 20);
+            this.$el.css('width') === '0px' ? '100%' : this.$el.css('width'));
 
         this.selectAllName = 'data-name="selectAll' + name + '"';
         this.selectGroupName = 'data-name="selectGroup' + name + '"';
