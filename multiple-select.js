@@ -251,6 +251,24 @@
             }
         },
 
+        prevSibling: function(e) {
+            var $prevSibling = $(e.target).parents('li').prevAll().find('input:visible').last();
+            if ($prevSibling.length) {
+                $prevSibling.focus();
+            } else {
+                this.$allControlItems.filter(':visible').last().focus();
+            }
+        },
+
+        nextSibling: function(e) {
+            var $nextSibling = $(e.target).parents('li').nextAll().find('input:visible').first();
+            if ($nextSibling.length) {
+                $nextSibling.focus();
+            } else {
+                this.$allControlItems.filter(':visible').first().focus();
+            }
+        },
+
         optionToHtml: function (i, elm, group, groupDisabled) {
             var that = this,
                 $elm = $(elm),
@@ -347,18 +365,39 @@
                 }
             });
 
-            var $firstCheckbox = this.$allControlItems.first();
-            var $lastCheckbox = this.$allControlItems.last();
-            $firstCheckbox.add($lastCheckbox).on('keyup', function (e) {
-                if (e.keyCode !== 9) return;
-                if (!that.options.filter && $(this).is($firstCheckbox) && e.shiftKey || $(this).is($lastCheckbox) && !e.shiftKey) {
+            this.$drop.find('ul').off('keydown').on('keydown', function (e) {
+                switch (e.which) {
+                    case 37: // left arrow key
+                        e.preventDefault();
+                        that.prevSibling(e);
+                        break;
+                    case 38: // up arrow key
+                        e.preventDefault();
+                        that.prevSibling(e);
+                        break;
+                    case 39: // right arrow key
+                        e.preventDefault();
+                        that.nextSibling(e);
+                        break;
+                    case 40: // down arrow key
+                        e.preventDefault();
+                        that.nextSibling(e);
+                        break;
+                }
+            })
+
+            this.$allControlItems.off('keydown').on('keydown', function (e) {
+                if (e.which !== 9) return;
+                var $target = $(e.target);
+                var $visibleControls = $target.parents('ul').find('input:visible');
+                if (!that.options.filter && $target.is($visibleControls.eq(0)) && e.shiftKey || $target.is($visibleControls.eq(-1)) && !e.shiftKey || $target.is('[type="radio"]') && !e.shiftKey) {
                     that.close();
                 }
             });
 
             this.$searchInput.off('keydown').on('keydown',function (e) {
                 // Ensure shift-tab causes lost focus from filter as with clicking away
-                if (e.keyCode === 9 && e.shiftKey) {
+                if (e.which === 9 && e.shiftKey) {
                     that.close();
                 }
             }).off('keyup').on('keyup', function (e) {
