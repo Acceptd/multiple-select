@@ -132,7 +132,7 @@
         this.options = options;
 
         // hide select element
-        this.$el = $el.hide();
+        this.$el = $el.attr('hidden', true);
 
         // label element
         this.$label = this.$el.closest('label');
@@ -167,10 +167,8 @@
         if (this.$el.prop('disabled')) {
             this.$choice.addClass('disabled');
         }
-        this.$parent.css('width',
-            this.options.width ||
-            this.$el.css('width') === '0px' ? '100%' : this.$el.css('width'));
 
+        if (this.options.width) this.$parent.css('width', this.options.width);
         this.selectAllName = 'data-name="selectAll' + name + '"';
         this.selectGroupName = 'data-name="selectGroup' + name + '"';
         this.selectItemName = 'data-name="selectItem' + name + '"';
@@ -227,10 +225,10 @@
             });
             $ul.append(elems);
 
+            if (this.options.maxHeight) $ul.css('max-height', this.options.maxHeight + 'px');
             $ul.append(sprintf('<li class="ms-no-results">%s</li>', this.options.noMatchesFound));
             this.$drop.append($ul);
 
-            this.$drop.find('ul').css('max-height', this.options.maxHeight + 'px');
             this.$drop.find('.multiple').css('width', this.options.multipleWidth + 'px');
 
             this.$searchInput = this.$drop.find('.ms-search input');
@@ -482,12 +480,12 @@
             this.$parent.addClass('open');
             this.$drop[this.animateMethod('show')]();
 
-            this.$selectAll.parent().show();
-            this.$noResults.hide();
+            this.$selectAll.parent().attr('hidden', false);
+            this.$noResults.attr('hidden', true);
 
             if (!this.$el.children().length) {
-                this.$selectAll.parent().hide();
-                this.$noResults.show();
+                this.$selectAll.parent().attr('hidden', true);
+                this.$noResults.attr('hidden', false);
             }
 
             if (this.options.container) {
@@ -704,7 +702,7 @@
         },
 
         destroy: function () {
-            this.$el.show();
+            this.$el.attr('hidden', false);
             this.$parent.remove();
             this.$el.data('multipleSelect', null);
         },
@@ -714,11 +712,11 @@
                 text = $.trim(this.$searchInput.val()).toLowerCase();
 
             if (text.length === 0) {
-                this.$selectAll.parent().show();
-                this.$selectItems.parent().show().removeClass('option-hidden, option-visible');
-                this.$disableItems.parent().show();
-                this.$selectGroups.parent().show();
-                this.$noResults.hide();
+                this.$selectAll.parent().attr('hidden', false);
+                this.$selectItems.parent().attr('hidden', false).removeClass('option-hidden, option-visible');
+                this.$disableItems.parent().attr('hidden', false);
+                this.$selectGroups.parent().attr('hidden', false);
+                this.$noResults.attr('hidden', true);
             } else {
                 this.$selectItems.each(function () {
                     var $parent = $(this).parent();
@@ -732,10 +730,10 @@
                     }
                 });
 
-                $('.option-hidden', this.$ul).hide();
-                $('.option-visible', this.$ul).show();
+                $('.option-hidden', this.$ul).attr('hidden', true);
+                $('.option-visible', this.$ul).attr('hidden', false);
 
-                this.$disableItems.parent().hide();
+                this.$disableItems.parent().attr('hidden', true);
                 this.$selectGroups.each(function () {
                     var $parent = $(this).parent();
                     var group = $parent.attr('data-group'),
@@ -745,11 +743,11 @@
 
                 //Check if no matches found
                 if (this.$selectItems.parent().filter(':visible').length) {
-                    this.$selectAll.parent().show();
-                    this.$noResults.hide();
+                    this.$selectAll.parent().attr('hidden', false);
+                    this.$noResults.attr('hidden', true);
                 } else {
-                    this.$selectAll.parent().hide();
-                    this.$noResults.show();
+                    this.$selectAll.parent().attr('hidden', true);
+                    this.$noResults.attr('hidden', false);
                 }
             }
             this.updateOptGroupSelect();
@@ -813,7 +811,7 @@
         filter: false,
         width: undefined,
         dropWidth: undefined,
-        maxHeight: 250,
+        maxHeight: undefined,
         container: null,
         position: 'bottom',
         keepOpen: false,

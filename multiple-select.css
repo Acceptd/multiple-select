@@ -6,6 +6,7 @@
     display: inline-block;
     position: relative;
     vertical-align: middle;
+    width: 100%;
 }
 
 .ms-choice {
@@ -141,6 +142,7 @@
     overflow: auto;
     margin: 0;
     padding: 5px 8px;
+    max-height: 250px;
 }
 
 .ms-drop ul > li {
