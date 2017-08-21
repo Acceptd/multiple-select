@@ -188,7 +188,3 @@
 .ms-drop input[type="radio"] {
     vertical-align: middle;
 }
-
-.ms-drop .ms-no-results {
-    display: none;
-}
