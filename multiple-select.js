@@ -562,7 +562,7 @@
             this.$el.val(this.getSelects()).trigger('change');
 
             // add selected class to selected li
-            this.$drop.find('li').removeClass('selected').attr('hidden', false);
+            this.$drop.find('li').not(this.$noResults).removeClass('selected').attr('hidden', false);
             this.$drop.find('input:checked').each(function () {
                 $(this).parents('li').first().addClass('selected');
             });
@@ -741,7 +741,7 @@
                     $parent[$items.filter(sprintf('[data-group="%s"]', group)).length ? 'show' : 'hide']();
                 });
 
-                //Check if no matches found
+                // Check if no matches found
                 if (this.$selectItems.parent().filter(':visible').length) {
                     this.$selectAll.parent().attr('hidden', false);
                     this.$noResults.attr('hidden', true);
