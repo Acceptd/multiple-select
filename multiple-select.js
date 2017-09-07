@@ -829,7 +829,7 @@
         filterPlaceholder: 'Search',
 
         styler: function () {
-            return false;
+            return '';
         },
         textTemplate: function ($elm) {
             return $elm.html();
