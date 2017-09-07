@@ -279,17 +279,19 @@
             if ($elm.is('option')) {
                 var value = $elm.val(),
                     text = that.options.textTemplate($elm),
+                    dataAttributes = $elm.data() || '',
                     hidden = $elm.prop('hidden'),
                     selected = $elm.prop('selected'),
-                    style = sprintf('style="%s"', this.options.styler(value)),
-                    $el;
+                    style = this.options.styler(value) ? sprintf('style="%s"', this.options.styler(value)) : $elm.attr('style') ? sprintf('style="%s"', $elm.attr('style')) : '',
+                    $el,
+                    $input;
 
                 disabled = groupDisabled || $elm.prop('disabled');
 
                 $el = $([
                     sprintf('<li class="%s %s" %s %s>', multiple, classes, title, style),
                     sprintf('<label class="%s">', disabled ? 'disabled' : ''),
-                    sprintf('<input type="%s" %s%s%s%s%s>',
+                    sprintf('<input type="%s" %s %s %s %s %s>',
                         type, this.selectItemName,
                         hidden ? ' hidden="hidden"' : '',
                         selected ? ' checked="checked"' : '',
@@ -300,7 +302,15 @@
                     '</label>',
                     '</li>'
                 ].join(''));
-                $el.find('input').val(value);
+
+                $input = $el.find('input');
+                $input.val(value);
+
+                if (dataAttributes) {
+                    $.each(dataAttributes, function(key, value) {
+                        $input.attr('data-' + key, value);
+                    });
+                }
                 return $el;
             }
             if ($elm.is('optgroup')) {
@@ -830,7 +840,7 @@
         filterPlaceholder: 'Search',
 
         styler: function () {
-            return '';
+            return false;
         },
         textTemplate: function ($elm) {
             return $elm.html();
