@@ -470,6 +470,7 @@
                     that.close();
                 }
             });
+            this.options.onComplete({instance: that});
         },
 
         open: function () {
@@ -863,6 +864,9 @@
         },
         onFilter: function () {
             return false;
-        }
+        },
+        onComplete: function () {
+            return false;
+        },
     };
 })(jQuery);
