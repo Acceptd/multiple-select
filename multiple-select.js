@@ -450,7 +450,7 @@
                 });
             });
             this.$selectItems.off('click').on('click', function () {
-                if (that.options.single && $(this).attr('checked')) { // http://api.jquery.com/attr/ "Initial state of the checkbox; does not change"
+                if (that.options.single && $(this).parents('li').hasClass('selected') && $(this).is(':checked')) {
                     if (that.options.isOpen && !that.options.keepOpen) that.close();
                     return;
                 }
