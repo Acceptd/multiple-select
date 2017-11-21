@@ -762,7 +762,7 @@
                 }
             }
             this.updateOptGroupSelect();
-            this.updateSelectAll();
+            this.updateSelectAll(true);
             this.options.onFilter(text);
         }
     };
