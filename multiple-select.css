@@ -105,7 +105,7 @@
     z-index: 10000;
 }
 
-.ms-search input {
+.ms-filter {
     width: 100%;
     height: auto !important;
     min-height: 24px;
@@ -130,7 +130,7 @@
     background: url('multiple-select.png') no-repeat 100% -22px, linear-gradient(top, #ffffff 85%, #eeeeee 99%);
 }
 
-.ms-search, .ms-search input {
+.ms-search, .ms-filter {
     -webkit-box-sizing: border-box;
     -khtml-box-sizing: border-box;
     -moz-box-sizing: border-box;

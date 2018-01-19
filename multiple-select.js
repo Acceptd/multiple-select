@@ -142,7 +142,8 @@
 
         // restore class and title from select element
         this.$parent = $(sprintf(
-            '<div class="ms-parent %s" %s/>',
+            '<div class="ms-parent %s %s" %s/>',
+            options.single ? 'ms-parent-single' : 'ms-parent-multiple',
             $el.attr('class') || '',
             sprintf('title="%s"', $el.attr('title'))));
 
@@ -200,7 +201,7 @@
             if (this.options.filter) {
                 this.$drop.append([
                     '<div class="ms-search">',
-                    sprintf('<input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="%s">', this.options.filterPlaceholder),
+                    sprintf('<input type="text" class="ms-filter" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="%s">', this.options.filterPlaceholder),
                     '</div>'].join('')
                 );
             }
@@ -272,7 +273,7 @@
                 $elm = $(elm),
                 classes = $elm.attr('class') || '',
                 title = sprintf('title="%s"', $elm.attr('title')),
-                multiple = this.options.multiple ? 'multiple' : '',
+                multiple = this.options.single ? 'single' : 'multiple',
                 disabled,
                 type = this.options.single ? 'radio' : 'checkbox';
 
@@ -816,7 +817,6 @@
         selectAllDelimiter: ['[', ']'],
         minimumCountSelected: 3,
         ellipsis: false,
-        multiple: false,
         multipleWidth: 80,
         single: false,
         filter: false,
