@@ -127,7 +127,7 @@
         var that = this,
             name = $el.attr('name') || options.name || '';
 
-        options.single = $el.prop('multiple') ? false : true;
+        options.singleSelect = $el.prop('multiple') ? false : true;
 
         this.options = options;
 
@@ -143,7 +143,7 @@
         // restore class and title from select element
         this.$parent = $(sprintf(
             '<div class="ms-parent %s %s" %s/>',
-            options.single ? 'ms-parent-single' : 'ms-parent-multiple',
+            options.singleSelect ? 'ms-parent-single' : 'ms-parent-multiple',
             $el.attr('class') || '',
             sprintf('title="%s"', $el.attr('title'))));
 
@@ -206,7 +206,7 @@
                 );
             }
 
-            if (this.options.selectAll && !this.options.single) {
+            if (this.options.selectAll && !this.options.singleSelect) {
                 $ul.append([
                     '<li class="ms-select-all">',
                     '<label>',
@@ -273,9 +273,10 @@
                 $elm = $(elm),
                 classes = $elm.attr('class') || '',
                 title = sprintf('title="%s"', $elm.attr('title')),
-                multiple = this.options.single ? 'single' : 'multiple',
+                multiple = this.options.multiple ? 'multiple' : '',
+                singleSelect = this.options.singleSelect ? 'single': '',
                 disabled,
-                type = this.options.single ? 'radio' : 'checkbox';
+                type = this.options.singleSelect ? 'radio' : 'checkbox';
 
             if ($elm.is('option')) {
                 var value = $elm.val(),
@@ -290,7 +291,7 @@
                 disabled = groupDisabled || $elm.prop('disabled');
 
                 $el = $([
-                    sprintf('<li class="%s %s" %s %s>', multiple, classes, title, style),
+                    sprintf('<li class="%s %s %s" %s %s>', multiple, singleSelect, classes, title, style),
                     sprintf('<label class="%s">', disabled ? 'disabled' : ''),
                     sprintf('<input type="%s" %s%s%s%s%s>',
                         type, this.selectItemName,
@@ -323,11 +324,11 @@
 
                 $group.append([
                     '<li class="group">',
-                    sprintf('<label class="optgroup %s %s" data-group="%s">', disabled ? 'disabled' : '', this.options.hideOptgroupCheckboxes || this.options.single ? 'hide-control' : '', group),
-                    this.options.hideOptgroupCheckboxes || this.options.single ? '' :
+                    sprintf('<label class="optgroup %s %s" data-group="%s">', disabled ? 'disabled' : '', this.options.hideOptgroupCheckboxes || this.options.singleSelect ? 'hide-control' : '', group),
+                    this.options.hideOptgroupCheckboxes || this.options.singleSelect ? '' :
                         sprintf('<input type="checkbox" %s %s>',
                         this.selectGroupName, disabled ? 'disabled="disabled"' : ''),
-                    this.options.hideOptgroupCheckboxes || this.options.single ? '' :
+                    this.options.hideOptgroupCheckboxes || this.options.singleSelect ? '' :
                         '<span class="ms-control-indicator"></span>',
                     label,
                     '</label>',
@@ -451,7 +452,7 @@
                 });
             });
             this.$selectItems.off('click').on('click', function () {
-                if (that.options.single && $(this).parents('li').hasClass('selected') && $(this).is(':checked')) {
+                if (that.options.singleSelect && $(this).parents('li').hasClass('selected') && $(this).is(':checked')) {
                     if (that.options.isOpen && !that.options.keepOpen) that.close();
                     return;
                 }
@@ -460,7 +461,7 @@
                 that.update();
                 that.updateOptGroupSelect();
 
-                if (that.options.single) {
+                if (that.options.singleSelect) {
                     var clickedVal = $(this).val();
                     that.$allControlItems.filter(function() {
                         return $(this).val() !== clickedVal;
@@ -477,7 +478,7 @@
                     instance: that
                 });
 
-                if (that.options.single && that.options.isOpen && !that.options.keepOpen) {
+                if (that.options.singleSelect && that.options.isOpen && !that.options.keepOpen) {
                     that.close();
                 }
             });
@@ -817,8 +818,9 @@
         selectAllDelimiter: ['[', ']'],
         minimumCountSelected: 3,
         ellipsis: false,
+        multiple: false,
         multipleWidth: 80,
-        single: false,
+        singleSelect: false,
         filter: false,
         width: undefined,
         dropWidth: undefined,
