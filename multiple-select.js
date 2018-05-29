@@ -457,10 +457,6 @@
                     return;
                 }
 
-                that.updateSelectAll();
-                that.update();
-                that.updateOptGroupSelect();
-
                 if (that.options.singleSelect) {
                     var clickedVal = $(this).val();
                     that.$allControlItems.filter(function() {
@@ -468,8 +464,11 @@
                     }).each(function() {
                         $(this).prop('checked', false);
                     });
-                    that.update();
                 }
+
+                that.updateSelectAll();
+                that.update();
+                that.updateOptGroupSelect();
 
                 that.options.onClick({
                     label: $(this).parent().text(),
@@ -571,8 +570,15 @@
                 $span.prop('title', this.getSelects('text'));
             }
 
+            // trigger change on initial setting unless changeOnInit is set to false
+            if (this.options.changeOnInit !== false) {
+                this.$el.bind('ms-init-change', function() {
+                    $(this).trigger('change');
+                });
+            }
+
             // set selects to select
-            this.$el.val(this.getSelects()).trigger('change');
+            this.$el.val(this.getSelects()).trigger('ms-init-change');
 
             // add selected class to selected li
             this.$drop.find('li').not(this.$noResults).removeClass('selected').attr('hidden', false);
@@ -584,7 +590,7 @@
             });
 
             // trigger <select> change event
-            if (!isInit && isInit !== undefined) {
+            if (!isInit) {
                 this.$el.trigger('change');
             }
         },
@@ -829,6 +835,7 @@
         position: 'bottom',
         keepOpen: false,
         animate: 'none', // 'none', 'fade', 'slide'
+        changeOnInit: false,
         displayValues: false,
         delimiter: ', ',
         addTitle: false,
